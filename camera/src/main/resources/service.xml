@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<service type="camera" name="Camera_1" version="1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="service.xsd">
+    <requests>
+        <request name="takePicture">
+            <params>
+                <param name="width_res" type="integer"/>
+                <param name="height_res" type="integer"/>
+            </params>
+            <response>
+                <params>
+                    <param name="picture" type="binary"/>
+                    <param name="timestamp" type="timestamp"/>
+                </params>
+            </response>
+        </request>
+        <request name="startStream">
+            <params>
+                <param name="width_res" type="integer"/>
+                <param name="height_res" type="integer"/>
+                <param name="duration" type="integer"/>
+            </params>
+            <response>
+                <params>
+                    <param name="success" type="boolean"/>
+                </params>
+            </response>
+        </request>
+        <request name="stopStream">
+            <response>
+                <params>
+                    <param name="success" type="boolean"/>
+                </params>
+            </response>
+        </request>
+        <request name="isStreaming">
+            <response>
+                <params>
+                    <param name="streaming" type="boolean"/>
+                </params>
+            </response>
+        </request>
+    </requests>
+</service>

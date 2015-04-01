@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="paramtypetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="boolean"/>
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="binary"/>
+            <xs:enumeration value="timestamp"/>
+            <xs:enumeration value="integer"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="servicetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="camera"/>
+            <xs:enumeration value="other"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="paramtype">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="paramtypetype" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="paramstype">
+        <xs:sequence>
+            <xs:element name="param" maxOccurs="unbounded" type="paramtype"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="responsetype">
+        <xs:sequence>
+            <xs:element name="params" minOccurs="0" maxOccurs="1" type="paramstype"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="requesttype">
+        <xs:sequence>
+            <xs:element name="params" minOccurs="0" type="paramstype"/>
+            <xs:element name="response" minOccurs="0" type="responsetype"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="requeststype">
+        <xs:sequence>
+            <xs:element name="request" minOccurs="1" maxOccurs="unbounded" type="requesttype"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="hs_servicetype">
+        <xs:sequence>
+            <xs:element name="requests" minOccurs="1" maxOccurs="1" type="requeststype"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="servicetype" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="version" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="service" type="hs_servicetype"/>
+</xs:schema>
